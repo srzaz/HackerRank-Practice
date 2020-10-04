@@ -5,23 +5,25 @@ using namespace std;
 vector<string> split_string(string);
 
 // Complete the minimumBribes function below.
+// O(nm) time
 void minimumBribes(vector<int> q) {
-   //while the value is less than 2, bribes can occur
+  
     int min_bribes = 0;
     
+   //start from back of line
     for(int i = q.size()-1; i >= 0; i--){
         int difference = q[i] - (i + 1);
-
+         
+       //integers can only move up to 2 times
         if(difference >= 3){
             cout << "Too chaotic" << endl;
             return;
         }
-
+        //check for greater ints, increment when greater because bribe occurred
         for(int j = (max(0, q[i]-2)); j < i; j++){
             if(q[j] > q[i]) min_bribes++;
         }
     }
-    
    
     cout << min_bribes << endl;
     return;
