@@ -6,8 +6,35 @@ using namespace std;
 // Find the number of pairs of substrings of the string
 // that are anagrams of eachothers
 
+int otherAnagrams(string s)
+{
+    map<string, int> m;
+    int len = (int)s.size();
+
+    int right = (int)s.size() - 1;
+    for (int left = 0; left < len; left++)
+    {
+        while (left < right)
+        {
+            string t = s.substr(left, right);
+            sort(t.begin(), t.end());
+            m[t]++;
+            right--;
+        }
+    }
+
+    long long ans = 0;
+
+    for(map<string,int>::iterator it = m.begin(); it != m.end(); ++it){
+         ans += (long long)(it->second) * (it->second - 1) / 2;
+    }
+    return ans;
+}
+
 //O(n^3) complexity
-int sherlockAndAnagrams(string s) {
+
+int sherlockAndAnagrams(string s)
+{
     //initialize map to hold pairs
     map<string, int> m;
 
@@ -15,8 +42,10 @@ int sherlockAndAnagrams(string s) {
     int len = (int)s.size();
 
     //loop through every possible combination of substring
-    for(int i = 0; i < len; i++){
-        for(int j = 1; i + j -1 < len; j++){
+    for (int i = 0; i < len; i++)
+    {
+        for (int j = 1; i + j - 1 < len; j++)
+        {
             //get the substring from point i to j
             string t = s.substr(i, j);
             // sort it because order doesnt matter, only occurrences of letters. (third for-loop)
@@ -28,11 +57,12 @@ int sherlockAndAnagrams(string s) {
 
     long long ans = 0;
     //iterate through combination counter
-    for(map<string, int>::iterator it = m.begin(); it != m.end(); ++it){
+    for (map<string, int>::iterator it = m.begin(); it != m.end(); ++it)
+    {
         //n(n-1)/2 for distinct pairs
-        ans += (long long)(it->second) * (it->second - 1)/2;
+        ans += (long long)(it->second) * (it->second - 1) / 2;
     }
-    
+
     return ans;
 }
 
@@ -44,7 +74,8 @@ int main()
     cin >> q;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    for (int q_itr = 0; q_itr < q; q_itr++) {
+    for (int q_itr = 0; q_itr < q; q_itr++)
+    {
         string s;
         getline(cin, s);
 
